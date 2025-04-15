@@ -1,1 +1,51 @@
-<p> This is new repo</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pharmacy Management System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Pharmacy Management System</h1>
+  </header>
+
+  <section class="form-section">
+    <h2>Add New Medicine</h2>
+    <form id="medicine-form">
+      <input type="text" id="med-name" placeholder="Medicine Name" required />
+      <input type="text" id="med-brand" placeholder="Brand" required />
+      <input type="number" id="med-qty" placeholder="Quantity" required />
+      <input type="number" id="med-price" placeholder="Price ($)" required />
+      <input type="date" id="med-expiry" required />
+      <button type="submit">Add Medicine</button>
+    </form>
+  </section>
+
+  <section class="search-section">
+    <h2>Search Medicines</h2>
+    <input type="text" id="search-input" placeholder="Search by name..." />
+  </section>
+
+  <section class="table-section">
+    <h2>Medicine Inventory</h2>
+    <table id="medicine-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Quantity</th>
+          <th>Price ($)</th>
+          <th>Expiry Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <p id="total-value">Total Inventory Value: $0</p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
