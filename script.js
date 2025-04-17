@@ -1,63 +1,67 @@
-const form = document.getElementById("medicine-form");
-const tableBody = document.querySelector("#medicine-table tbody");
-const searchInput = document.getElementById("search-input");
-const totalValueDisplay = document.getElementById("total-value");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("medicine-form");
+  const tableBody = document.querySelector("#medicine-table tbody");
+  const totalValueDisplay = document.getElementById("total-value");
+  const searchInput = document.getElementById("search-input");
 
-let medicines = [];
+  let medicines = JSON.parse(localStorage.getItem("medicines")) || [];
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+  function updateLocalStorage() {
+    localStorage.setItem("medicines", JSON.stringify(medicines));
+  }
 
-  const name = document.getElementById("med-name").value;
-  const brand = document.getElementById("med-brand").value;
-  const qty = parseInt(document.getElementById("med-qty").value);
-  const price = parseFloat(document.getElementById("med-price").value);
-  const expiry = document.getElementById("med-expiry").value;
+  function renderTable(data) {
+    tableBody.innerHTML = "";
+    let total = 0;
 
-  const medicine = { name, brand, qty, price, expiry };
-  medicines.push(medicine);
+    data.forEach((med, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${med.name}</td>
+        <td>${med.brand}</td>
+        <td>${med.quantity}</td>
+        <td>$${med.price.toFixed(2)}</td>
+        <td>${med.expiry}</td>
+        <td><button onclick="deleteMedicine(${index})">🗑️ Delete</button></td>
+      `;
+      total += med.price * med.quantity;
+      tableBody.appendChild(row);
+    });
 
-  form.reset();
-  updateTable();
-});
+    totalValueDisplay.textContent = `Total Inventory Value: $${total.toFixed(2)}`;
+  }
 
-function updateTable() {
-  tableBody.innerHTML = "";
+  window.deleteMedicine = function(index) {
+    medicines.splice(index, 1);
+    updateLocalStorage();
+    renderTable(medicines);
+  };
 
-  const filtered = medicines.filter(med =>
-    med.name.toLowerCase().includes(searchInput.value.toLowerCase())
-  );
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  let total = 0;
+    const newMed = {
+      name: document.getElementById("med-name").value.trim(),
+      brand: document.getElementById("med-brand").value.trim(),
+      quantity: parseInt(document.getElementById("med-qty").value),
+      price: parseFloat(document.getElementById("med-price").value),
+      expiry: document.getElementById("med-expiry").value
+    };
 
-  filtered.forEach((med, index) => {
-    const row = document.createElement("tr");
-
-    const isExpired = new Date(med.expiry) < new Date();
-    if (isExpired) row.classList.add("expired");
-
-    total += med.qty * med.price;
-
-    row.innerHTML = `
-      <td>${med.name}</td>
-      <td>${med.brand}</td>
-      <td>${med.qty}</td>
-      <td>${med.price.toFixed(2)}</td>
-      <td>${med.expiry}</td>
-      <td><button onclick="deleteMedicine(${index})">Delete</button></td>
-    `;
-
-    tableBody.appendChild(row);
+    medicines.push(newMed);
+    updateLocalStorage();
+    renderTable(medicines);
+    form.reset();
   });
 
-  totalValueDisplay.textContent = `Total Inventory Value: $${total.toFixed(2)}`;
-}
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase();
+    const filtered = medicines.filter(med =>
+      med.name.toLowerCase().includes(keyword) ||
+      med.brand.toLowerCase().includes(keyword)
+    );
+    renderTable(filtered);
+  });
 
-function deleteMedicine(index) {
-  if (confirm("Are you sure you want to delete this medicine?")) {
-    medicines.splice(index, 1);
-    updateTable();
-  }
-}
-
-searchInput.addEventListener("input", updateTable);
+  renderTable(medicines); // Initial load
+});

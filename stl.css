@@ -1,0 +1,122 @@
+/* General Reset and Background */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #c3ecf7, #f7d9ec);
+    color: #333;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Navigation Bar */
+  nav {
+    background: #2d3436;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+  }
+  
+  nav h2 {
+    font-size: 1.8rem;
+    color: #00cec9;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  nav ul li a:hover {
+    color: #00cec9;
+  }
+  
+  /* Main Content Area */
+  .main-content {
+    padding: 40px;
+    max-width: 1000px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  /* Buttons */
+  .action-btn {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    margin: 10px 0;
+    transition: background 0.3s;
+  }
+  
+  .green { background: #2ecc71; }
+  .green:hover { background: #27ae60; }
+  
+  .blue { background: #3498db; }
+  .blue:hover { background: #2980b9; }
+  
+  .red { background: #e74c3c; }
+  .red:hover { background: #c0392b; }
+  
+  /* Forms */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+  }
+  
+  form label {
+    font-weight: bold;
+    color: #444;
+  }
+  
+  form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Table (for expired medicines) */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #00b894;
+    color: white;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
